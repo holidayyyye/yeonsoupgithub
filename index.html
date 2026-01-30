@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='style.css' rel='stylesheet'>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>당신의 이름은?</title>
+    <link href='style.css' rel='stylesheet'>
 </head>
 <body>
-    <button id="theme-toggle">Toggle Theme</button>
-    <div class="container">
-        <h1>Lotto Drawing</h1>
-        <div class="lotto-numbers">
-        </div>
-        <button id="generate">Generate Numbers</button>
+    <div id="name-container" class="container">
+        <h1>당신의 이름은 무엇입니까?</h1>
+        <input type="text" id="name-input" placeholder="여기에 이름을...">
+        <button id="submit-name">확인</button>
     </div>
+
+    <div id="result-container" class="container hidden">
+        <span id="result-text">똥</span>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>
