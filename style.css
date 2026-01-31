@@ -1,145 +1,165 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap');
+/* Import a clean, modern sans-serif font suitable for Korean */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
+/* Global Styles */
 html, body {
-    min-height: 100vh; /* Use min-height for scrollability */
+    min-height: 100vh; /* Ensure full viewport height, allow scrolling */
     margin: 0;
-    display: flex;
-    flex-direction: column; /* Changed to column for vertical flow */
-    align-items: center; /* Center horizontally */
-    justify-content: flex-start; /* Start from the top, to address mobile issue */
-    text-align: center;
-    font-family: 'Noto Serif KR', serif;
-    /* Richer, darker background gradient with a hint of red/brown */
-    background: linear-gradient(135deg, #2c212b 0%, #4a3e4a 50%, #2c212b 100%);
-    color: #e0d0c0; /* Slightly muted light text color */
+    font-family: 'Noto Sans KR', sans-serif; /* Clean sans-serif font */
+    background-color: #f0f2f5; /* Very light, clean background */
+    color: #333; /* Darker, neutral text color */
     line-height: 1.6;
-    padding: 20px; /* Add some default padding to body */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: flex-start; /* Start content from the top */
+    padding: 20px; /* General padding for body */
     box-sizing: border-box; /* Include padding in element's total width and height */
 }
 
+/* Main Container */
 .container {
-    padding: 40px;
-    background-color: rgba(30, 25, 30, 0.95); /* Darker, richer background with less transparency */
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); /* Softer, more diffused shadow */
-    width: 90%;
-    max-width: 500px;
+    background-color: #ffffff; /* Clean white background */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle, modern shadow */
+    padding: 30px;
+    width: 100%;
+    max-width: 550px; /* Slightly wider for modern feel, maintain readability */
     box-sizing: border-box;
+    text-align: left; /* Align text within container to left for professionalism */
+    margin-top: 50px; /* Push container down from the very top */
+    margin-bottom: 50px; /* Add margin at the bottom for better spacing on scroll */
 }
 
+/* Heading */
 h1 {
-    color: #ffe0b2; /* Lighter, warmer gold/orange for title */
-    font-size: 2.5rem;
-    margin-bottom: 30px;
+    font-size: 2.2rem;
     font-weight: 700;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* Slightly stronger text shadow */
+    color: #2c3e50; /* Strong, dark heading color */
+    margin-bottom: 25px;
+    letter-spacing: -0.5px; /* Tighten letter spacing slightly for modern look */
+    text-align: center; /* Center the main heading */
 }
 
+/* Form Group */
 .form-group {
     margin-bottom: 20px;
-    text-align: left;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-size: 1.1rem;
-    color: #f5deb3; /* Creamy color for labels */
+    font-size: 1rem;
+    font-weight: 500; /* Medium weight for labels */
+    color: #444; /* Slightly lighter than heading */
 }
 
+/* Input Fields */
 input[type="text"],
 textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #5a4a5a; /* Darker, more subtle border */
-    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #dcdcdc; /* Light, subtle border */
+    border-radius: 6px; /* Slightly less rounded */
     font-size: 1rem;
-    background-color: #3a2f3a; /* Even darker input background */
-    color: #f0e6d6; /* Light text color in inputs */
+    color: #333;
+    background-color: #ffffff;
     box-sizing: border-box;
-    font-family: 'Noto Serif KR', serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 input[type="text"]::placeholder,
 textarea::placeholder {
-    color: #a090a0; /* Slightly darker placeholder text */
+    color: #a0a0a0; /* Neutral placeholder */
 }
 
 input[type="text"]:focus,
 textarea:focus {
     outline: none;
-    border-color: #ffb74d; /* Softer orange highlight on focus */
-    box-shadow: 0 0 8px rgba(255, 183, 77, 0.4); /* Softer glow */
+    border-color: #007bff; /* Standard blue accent for focus */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Soft focus glow */
 }
 
+/* Submit Button */
 button[type="submit"] {
-    padding: 15px 30px;
+    display: block; /* Make button full width if needed or center easily */
+    width: auto; /* Adjust to content width */
+    margin: 30px auto 0; /* Center button horizontally */
+    padding: 12px 25px;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #2a1f2a; /* Darker text on button */
-    background-color: #d84315; /* Deeper, more rustic orange/red button */
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: 600; /* Semi-bold */
+    color: #ffffff; /* White text on button */
+    background-color: #007bff; /* Primary blue accent color */
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for button */
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2); /* Subtle button shadow */
 }
 
 button[type="submit"]:hover {
-    background-color: #bf360c; /* Darker red-orange on hover */
-    transform: translateY(-2px);
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
 }
 
+/* Message Box (retained, but styled neutrally) */
 .message-box {
-    padding: 40px;
-    background-color: rgba(45, 35, 45, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    width: 90%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    width: 100%;
     max-width: 400px;
     box-sizing: border-box;
-    position: absolute; /* Position over the form */
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    position: fixed; /* Use fixed for overlays */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center perfectly */
+    z-index: 1000; /* Ensure it's on top */
+    text-align: center;
 }
 
 .message-box h2 {
-    color: #ffcc99;
-    font-size: 2.5rem;
+    color: #2c3e50;
+    font-size: 2rem;
     margin-bottom: 15px;
+    font-weight: 700;
 }
 
 .message-box p {
-    font-size: 1.3rem;
-    color: #e0d0c0;
+    font-size: 1.1rem;
+    color: #555;
 }
 
 .hidden {
     display: none !important;
 }
+
+/* Responsive adjustments */
 @media (max-width: 600px) {
-    body {
-        padding-top: 40px; /* Add more padding to push content down from the top */
-        justify-content: flex-start; /* Ensure content starts from the top */
+    html, body {
+        padding: 15px; /* Reduce general padding on smaller screens */
     }
 
     .container {
-        padding: 20px; /* Reduce container padding on smaller screens */
-    }
-
-    h1 {
-        font-size: 2rem; /* Slightly reduce heading font size on mobile */
+        padding: 20px; /* Adjust container padding */
+        margin-top: 20px; /* Less margin on mobile */
         margin-bottom: 20px;
     }
 
+    h1 {
+        font-size: 1.8rem; /* Smaller heading on mobile */
+        margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    textarea,
     button[type="submit"] {
-        padding: 12px 25px; /* Adjust button padding */
-        font-size: 1rem;
+        padding: 10px 12px; /* Slightly smaller padding for inputs/buttons */
+        font-size: 0.95rem;
+    }
+
+    button[type="submit"] {
+        margin-top: 20px;
     }
 }
-
