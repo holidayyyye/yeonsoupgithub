@@ -10,7 +10,26 @@
 <body>
     <div class="container">
         <h1>승현이의 집들이에 초대합니다.</h1>
-        <iframe src="https://forms.gle/wi4cxMS8QjYPH9Qb6" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">로드 중…</iframe>
+        <form action="https://formspree.io/f/yoyo4766@naver.com" method="POST">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="이름" required placeholder="이름을 입력해주세요.">
+            </div>
+            <div class="form-group">
+                <label for="preferred-food">선호하는 음식</label>
+                <textarea id="preferred-food" name="선호하는 음식" rows="3" placeholder="예: 한식 (매운 것 선호), 이탈리안 등"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="disliked-food">비선호하는 음식</label>
+                <textarea id="disliked-food" name="비선호하는 음식" rows="3" placeholder="예: 고수, 해산물, 특정 알러지 유발 음식"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="preferred-drink">선호하는 음주</label>
+                <input type="text" id="preferred-drink" name="선호하는 음주" placeholder="예: 소주, 맥주, 와인, 탄산음료 등">
+            </div>
+            <!-- Add a submit button -->
+            <button type="submit">제출</button>
+        </form>
     </div>
 
     <div id="thank-you-message" class="message-box hidden">
