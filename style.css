@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap');
+
 html, body {
     height: 100%;
     margin: 0;
@@ -5,85 +7,112 @@ html, body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f0f2f5;
-
-    /* --- Add laughing people images here --- */
-    /* Replace 'URL_TO_YOUR_LAUGHING_PEOPLE_IMAGE' with an actual image URL */
-    /* Example: background-image: url('https://example.com/laughing-emoji.png'); */
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">😂</text></svg>'); /* Placeholder emoji */
-    background-repeat: repeat;
-    background-size: 100px; /* Adjust size as needed */
-    background-blend-mode: multiply; /* Optional: blend with background color */
-    /* ------------------------------------- */
+    font-family: 'Noto Serif KR', serif; /* Apply Noto Serif KR */
+    background: linear-gradient(to bottom right, #3a2e3b, #5c4a5c); /* Warm, dark gradient */
+    color: #f0e6d6; /* Light, warm text color */
+    line-height: 1.6;
 }
 
 .container {
-    padding: 30px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    z-index: 1; /* Ensure container is above background images */
-    position: relative; /* For z-index to work */
+    padding: 40px;
+    background-color: rgba(45, 35, 45, 0.9); /* Slightly transparent dark background */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 500px;
+    box-sizing: border-box;
 }
 
 h1 {
-    color: #333;
-    font-size: 1.8rem;
-    margin-bottom: 25px;
+    color: #ffcc99; /* Warm gold/orange for title */
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-#name-input {
-    width: 80%;
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #e0d0c0; /* Slightly muted light color for labels */
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
     padding: 12px;
-    border: 2px solid #ddd;
+    border: 1px solid #7a6a7a; /* Subtle border color */
     border-radius: 8px;
     font-size: 1rem;
-    margin-bottom: 20px;
-    transition: border-color 0.2s;
+    background-color: #4a3e4a; /* Darker input background */
+    color: #f0e6d6; /* Light text color in inputs */
+    box-sizing: border-box; /* Include padding in width */
+    font-family: 'Noto Serif KR', serif;
 }
 
-#name-input:focus {
+input[type="text"]::placeholder,
+textarea::placeholder {
+    color: #b0a0b0; /* Lighter placeholder text */
+}
+
+input[type="text"]:focus,
+textarea:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #ffaa66; /* Highlight on focus */
+    box-shadow: 0 0 8px rgba(255, 170, 102, 0.5);
 }
 
-#submit-name {
-    padding: 12px 30px;
+button[type="submit"] {
+    padding: 15px 30px;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: white;
-    background-color: #007bff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #3a2e3b; /* Dark text on button */
+    background-color: #ffaa66; /* Warm orange button */
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
 }
 
-#submit-name:hover {
-    background-color: #0056b3;
+button[type="submit"]:hover {
+    background-color: #ff8c33; /* Darker orange on hover */
+    transform: translateY(-2px);
 }
 
-/* Result Screen Styling */
-#result-text {
-    font-size: 10rem; /* Adjusted for longer text */
-    font-weight: bold;
-    color: #8b4513; /* Brown color */
-    animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    line-height: 1.2; /* Adjust line height for multi-line text */
+.message-box {
+    padding: 40px;
+    background-color: rgba(45, 35, 45, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 400px;
+    box-sizing: border-box;
+    position: absolute; /* Position over the form */
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-@keyframes pop-in {
-    0% {
-        transform: scale(0.1);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+.message-box h2 {
+    color: #ffcc99;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.message-box p {
+    font-size: 1.3rem;
+    color: #e0d0c0;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }

@@ -3,18 +3,37 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>당신의 이름은?</title>
+    <title>승현이의 집들이 초대</title>
+    <link href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap' rel='stylesheet'>
     <link href='style.css' rel='stylesheet'>
 </head>
 <body>
-    <div id="name-container" class="container">
-        <h1>당신의 이름은 무엇입니까?</h1>
-        <input type="text" id="name-input" placeholder="여기에 이름을...">
-        <button id="submit-name">확인</button>
+    <div class="container">
+        <h1>승현이의 집들이에 초대합니다.</h1>
+        <form id="housewarming-form">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" required placeholder="이름을 입력해주세요.">
+            </div>
+            <div class="form-group">
+                <label for="preferred-food">선호하는 음식</label>
+                <textarea id="preferred-food" name="preferred-food" rows="3" placeholder="예: 한식 (매운 것 선호), 이탈리안 등"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="disliked-food">비선호하는 음식</label>
+                <textarea id="disliked-food" name="disliked-food" rows="3" placeholder="예: 고수, 해산물, 특정 알러지 유발 음식"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="preferred-drink">선호하는 음주</label>
+                <input type="text" id="preferred-drink" name="preferred-drink" placeholder="예: 소주, 맥주, 와인, 탄산음료 등">
+            </div>
+            <button type="submit">제출</button>
+        </form>
     </div>
 
-    <div id="result-container" class="container hidden">
-        <span id="result-text">똥</span>
+    <div id="thank-you-message" class="message-box hidden">
+        <h2>감사합니다.</h2>
+        <p>곧 뵙겠습니다.</p>
     </div>
 
     <script src="main.js"></script>
