@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('submission-form');
     const thankYouMessage = document.getElementById('thank-you-message');
-    const container = document.querySelector('.container'); // Assuming the form is inside .container
+    const goBackButton = document.getElementById('go-back-button');
 
     // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
@@ -36,15 +35,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Form Submission Logic
-    if (form && thankYouMessage && container) {
-        const goBackButton = document.getElementById('go-back-button');
+    // Navigation and Content Switching Logic
+    const showInvitationButton = document.getElementById('show-invitation');
+    const showSajuButton = document.getElementById('show-saju');
+    const invitationSection = document.getElementById('invitation-section');
+    const sajuSection = document.getElementById('saju-section');
 
-        form.addEventListener('submit', async function(event) {
+    function showSection(sectionToShow) {
+        invitationSection.classList.add('hidden');
+        sajuSection.classList.add('hidden');
+
+        showInvitationButton.classList.remove('active');
+        showSajuButton.classList.remove('active');
+
+        if (sectionToShow === 'invitation') {
+            invitationSection.classList.remove('hidden');
+            showInvitationButton.classList.add('active');
+        } else if (sectionToShow === 'saju') {
+            sajuSection.classList.remove('hidden');
+            showSajuButton.classList.add('active');
+        }
+    }
+
+    if (showInvitationButton && showSajuButton) {
+        showInvitationButton.addEventListener('click', function() {
+            showSection('invitation');
+        });
+
+        showSajuButton.addEventListener('click', function() {
+            showSection('saju');
+        });
+    }
+
+    // Form Submission Logic for Invitation Form
+    const invitationForm = document.getElementById('submission-form');
+    const invitationFormContainer = invitationSection.querySelector('.container'); // Get container within invitation section
+
+    if (invitationForm && thankYouMessage && invitationFormContainer) {
+        invitationForm.addEventListener('submit', async function(event) {
             event.preventDefault(); // Prevent default form submission
 
-            const formData = new FormData(form);
-            const formUrl = form.action;
+            const formData = new FormData(invitationForm);
+            const formUrl = invitationForm.action;
 
             try {
                 const response = await fetch(formUrl, {
@@ -57,9 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (response.ok) {
                     // Formspree submission successful
-                    container.style.display = 'none'; // Hide the form container
+                    invitationFormContainer.style.display = 'none'; // Hide the form container
                     thankYouMessage.classList.remove('hidden'); // Show the thank you message
-                    form.reset(); // Optionally clear the form fields
+                    invitationForm.reset(); // Optionally clear the form fields
                 } else {
                     // Formspree submission failed (e.g., validation error)
                     const data = await response.json();
@@ -72,15 +104,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Submission error:', error);
             }
         });
-
-        if (goBackButton) {
-            goBackButton.addEventListener('click', function() {
-                thankYouMessage.classList.add('hidden'); // Hide the thank you message
-                container.style.display = 'block'; // Show the form container
-            });
-        }
-
-    } else {
-        console.error('Form, thank you message, container, or go back button element not found.');
     }
+
+    if (goBackButton) { // Ensure goBackButton listener is always attached
+        goBackButton.addEventListener('click', function() {
+            thankYouMessage.classList.add('hidden'); // Hide the thank you message
+            // Decide which section to show when returning, default to invitation
+            showSection('invitation');
+            // If the user was in saju section, maybe return to saju section?
+            // For now, always return to invitation section
+            invitationFormContainer.style.display = 'block'; // Ensure form container is visible if returning to invitation
+        });
+    }
+
+
+    // Placeholder Saju (Fortune-Telling) Logic
+    const sajuForm = document.getElementById('saju-form');
+    const sajuResultDiv = document.getElementById('saju-result');
+    const sajuResultText = document.getElementById('saju-text');
+    const sajuResetButton = document.getElementById('saju-reset-button');
+    const sajuFormContainer = sajuSection.querySelector('.container'); // Get container within saju section
+
+    // Placeholder fortune messages
+    const fortunes = [
+        "오늘은 운수 대통! 모든 일이 술술 풀릴 거예요.",
+        "조금은 조심해야 할 하루네요. 중요한 결정은 신중하게!",
+        "새로운 기회가 찾아올 거예요. 용기를 내어 도전하세요.",
+        "사랑과 행복이 가득한 날이에요. 주변 사람들에게 감사함을 표현해 보세요.",
+        "건강에 유의해야 해요. 충분한 휴식을 취하는 것이 중요합니다.",
+        "금전운이 상승하고 있어요. 작은 행운을 기대해 봐도 좋겠네요.",
+        "뜻밖의 소식이 들려올 수 있어요. 긍정적인 마음으로 기다려 보세요.",
+        "인간관계에서 좋은 변화가 있을 거예요. 마음을 열고 대화해 보세요."
+    ];
+
+    if (sajuForm && sajuResultDiv && sajuResultText && sajuResetButton && sajuFormContainer) {
+        sajuForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Simulate fortune-telling based on inputs (simplified)
+            const birthYear = sajuForm.elements['birth-year'].value;
+            const birthMonth = sajuForm.elements['birth-month'].value;
+            const birthDay = sajuForm.elements['birth-day'].value;
+            const gender = sajuForm.elements['gender'].value;
+
+            if (!birthYear || !birthMonth || !birthDay || !gender) {
+                alert('모든 필수 정보를 입력해주세요.');
+                return;
+            }
+
+            // Generate a random fortune from the array
+            const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+
+            sajuResultText.textContent = `당신의 ${birthYear}년 ${birthMonth}월 ${birthDay}일(${gender === 'male' ? '남성' : '여성'}) 사주는 다음과 같습니다:\n\n${randomFortune}`;
+
+            sajuForm.style.display = 'none'; // Hide form
+            sajuResultDiv.classList.remove('hidden'); // Show result
+        });
+
+        sajuResetButton.addEventListener('click', function() {
+            sajuResultDiv.classList.add('hidden'); // Hide result
+            sajuForm.style.display = 'block'; // Show form
+            sajuForm.reset(); // Clear form fields
+        });
+    }
+
+    // Initialize to show invitation section
+    showSection('invitation');
 });

@@ -11,53 +11,89 @@
     <div id="theme-toggle-container">
         <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </div>
-    <div class="container">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='2'%3E%3Cpath%20d='M3%209l9-7%209%207v11a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2z'/%3E%3Cpolyline%20points='9%2022%209%2012%2015%2012%2015%2022'/%3E%3C/svg%3E" alt="Cute house illustration" id="house-illustration">
-        <h1>승현이의 집들이에<br>초대합니다.</h1>
-        <form id="submission-form" action="https://formspree.io/f/meekdzak" method="POST">
-            <div class="form-group">
-                <label for="name">이름</label>
-                <input type="text" id="name" name="이름" required placeholder="이름을 입력해주세요.">
-            </div>
-            <div class="form-group">
-                <label for="preferred-food">선호하는 음식</label>
-                <textarea id="preferred-food" name="선호하는 음식" rows="3" placeholder="예: 한식 (매운 것 선호), 이탈리안 등"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="disliked-food">비선호하는 음식</label>
-                <textarea id="disliked-food" name="비선호하는 음식" rows="3" placeholder="예: 고수, 해산물, 특정 알러지 유발 음식"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="preferred-drink">선호하는 음주</label>
-                <input type="text" id="preferred-drink" name="선호하는 음주" placeholder="예: 소주, 맥주, 와인, 탄산음료 등">
-            </div>
-            <!-- Add a submit button -->
-            <button type="submit">제출</button>
-        </form>
+
+    <div id="nav-tabs">
+        <button id="show-invitation" class="nav-tab active">집들이 초대</button>
+        <button id="show-saju" class="nav-tab">사주 보기</button>
     </div>
 
-        <div id="thank-you-message" class="message-box hidden">
-
-            <h2>감사합니다.</h2>
-
-            <p>곧 뵙겠습니다.</p>
-
-            <button type="button" id="go-back-button">돌아가기</button>
-
+    <div id="invitation-section" class="content-section">
+        <div class="container">
+            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M3%209l9-7%209%207v11a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2z'/%3E%3Cpolyline%20points='9%2022%209%2012%2015%2012%2015%2022'/%3E%3C/svg%3E" alt="Cute house illustration" id="house-illustration">
+            <h1>승현이의 집들이에<br>초대합니다.</h1>
+            <form id="submission-form" action="https://formspree.io/f/meekdzak" method="POST">
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="이름" required placeholder="이름을 입력해주세요.">
+                </div>
+                <div class="form-group">
+                    <label for="preferred-food">선호하는 음식</label>
+                    <textarea id="preferred-food" name="선호하는 음식" rows="3" placeholder="예: 한식 (매운 것 선호), 이탈리안 등"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="disliked-food">비선호하는 음식</label>
+                    <textarea id="disliked-food" name="비선호하는 음식" rows="3" placeholder="예: 고수, 해산물, 특정 알러지 유발 음식"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="preferred-drink">선호하는 음주</label>
+                    <input type="text" id="preferred-drink" name="선호하는 음주" placeholder="예: 소주, 맥주, 와인, 탄산음료 등">
+                </div>
+                <!-- Add a submit button -->
+                <button type="submit">제출</button>
+            </form>
         </div>
+    </div>
 
-    
+    <div id="saju-section" class="content-section hidden">
+        <div class="container">
+            <h1>사주 보기</h1>
+            <p>생년월일 정보를 입력하여 사주 결과를 확인하세요.</p>
+            <form id="saju-form">
+                <div class="form-group">
+                    <label for="birth-year">출생년도</label>
+                    <input type="number" id="birth-year" required placeholder="예: 1990">
+                </div>
+                <div class="form-group">
+                    <label for="birth-month">출생월</label>
+                    <input type="number" id="birth-month" required placeholder="예: 1 (1월)">
+                </div>
+                <div class="form-group">
+                    <label for="birth-day">출생일</label>
+                    <input type="number" id="birth-day" required placeholder="예: 15">
+                </div>
+                <div class="form-group">
+                    <label for="birth-hour">출생시 (음력)</label>
+                    <input type="number" id="birth-hour" placeholder="예: 14 (오후 2시)">
+                </div>
+                <div class="form-group">
+                    <label for="gender">성별</label>
+                    <select id="gender" required>
+                        <option value="">선택</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
+                </div>
+                <button type="submit">사주 결과 보기</button>
+            </form>
+            <div id="saju-result" class="hidden">
+                <h2>사주 결과</h2>
+                <p id="saju-text"></p>
+                <button type="button" id="saju-reset-button">다시 하기</button>
+            </div>
+        </div>
+    </div>
 
-        <a href="https://map.naver.com/v5/search/당산역 대우디오빌" target="_blank" id="naver-map-link" aria-label="네이버 지도에서 당산역 대우디오빌 검색">
+    <div id="thank-you-message" class="message-box hidden">
+        <h2>감사합니다.</h2>
+        <p>곧 뵙겠습니다.</p>
+        <button type="button" id="go-back-button">돌아가기</button>
+    </div>
 
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M21%2010c0%207-9%2013-9%2013s-9-6-9-13a9%209%200%200%201%2018%200z'%3E%3C/path%3E%3Ccircle%20cx='12'%20cy='10'%20r='3'%3E%3C/circle%3E%3C/svg%3E" alt="네이버 지도 아이콘">
+    <a href="https://map.naver.com/v5/search/당산역 대우디오빌" target="_blank" id="naver-map-link" aria-label="네이버 지도에서 당산역 대우디오빌 검색">
+        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M21%2010c0%207-9%2013-9%2013s-9-6-9-13a9%209%200%200%201%2018%200z'%3E%3C/path%3E%3Ccircle%20cx='12'%20cy='10'%20r='3'%3E%3C/circle%3E%3C/svg%3E" alt="네이버 지도 아이콘">
+    </a>
 
-        </a>
-
-    
-
-        <script src="main.js"></script>
-
-    </body>
+    <script src="main.js"></script>
+</body>
 
     </html>

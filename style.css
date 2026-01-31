@@ -69,6 +69,73 @@ body.dark-mode {
     background-color: var(--bg-color);
 }
 
+#nav-tabs {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    display: flex;
+    background-color: var(--container-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.nav-tab {
+    padding: 10px 15px;
+    border: none;
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 8px; /* For rounded corners on active tab */
+}
+
+.nav-tab:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Subtle hover effect */
+}
+
+.nav-tab.active {
+    background-color: var(--focus-border-color); /* Use accent color for active tab */
+    color: var(--button-text-color);
+    font-weight: 600;
+}
+
+.content-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: var(--input-bg-color);
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+    -webkit-appearance: none; /* Remove default arrow */
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6%209l6%206%206-6'/%3E%3C/svg%3E"); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--focus-border-color);
+    box-shadow: 0 0 0 3px var(--focus-shadow);
+}
+
 
 /* Global Styles */
 html, body {
@@ -79,9 +146,13 @@ html, body {
     color: var(--text-color); /* Use CSS variable */
     line-height: 1.6;
     display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: flex-start; /* Start content from the top */
-    padding: 20px; /* General padding for body */
+    /* Removed justify-content: center; and align-items: flex-start; to be more flexible with content sections */
+    flex-direction: column; /* Allow content sections to stack */
+    align-items: center; /* Center content sections horizontally */
+    padding-top: 80px; /* Add padding to body to account for fixed #nav-tabs */
+    padding-bottom: 20px; /* General padding for bottom */
+    padding-left: 20px; /* General padding for sides */
+    padding-right: 20px; /* General padding for sides */
     box-sizing: border-box; /* Include padding in element's total width and height */
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
 }
@@ -96,8 +167,8 @@ html, body {
     max-width: 550px; /* Slightly wider for modern feel, maintain readability */
     box-sizing: border-box;
     text-align: left; /* Align text within container to left for professionalism */
-    margin-top: 50px; /* Push container down from the very top */
-    margin-bottom: 50px; /* Add margin at the bottom for better spacing on scroll */
+    /* Removed specific margin-top/bottom as padding-top on body now accounts for fixed elements */
+    margin-bottom: 0; /* Adjust as needed, content sections will handle their own spacing */
     transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for theme change */
 }
 
@@ -274,11 +345,23 @@ button[type="submit"]:hover {
 @media (max-width: 600px) {
     html, body {
         padding: 15px; /* Reduce general padding on smaller screens */
+        padding-top: 70px; /* Adjust for fixed #nav-tabs on mobile */
+    }
+
+    #nav-tabs {
+        top: 15px;
+        left: 15px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    #theme-toggle-container {
+        top: 15px;
+        right: 15px;
     }
 
     .container {
         padding: 20px; /* Adjust container padding */
-        margin-top: 20px; /* Less margin on mobile */
+        margin-top: 0; /* Reset margin-top as body padding accounts for it */
         margin-bottom: 20px;
     }
 
@@ -289,12 +372,25 @@ button[type="submit"]:hover {
 
     input[type="text"],
     textarea,
-    button[type="submit"] {
+    button[type="submit"],
+    select { /* Added select for consistency */
         padding: 10px 12px; /* Slightly smaller padding for inputs/buttons */
         font-size: 0.95rem;
     }
 
     button[type="submit"] {
         margin-top: 20px;
+    }
+
+    #naver-map-link {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
+
+    #naver-map-link img {
+        width: 25px;
+        height: 25px;
     }
 }
