@@ -341,6 +341,33 @@ button[type="submit"]:hover {
     display: none !important;
 }
 
+#main-footer {
+    width: 100%;
+    max-width: 550px; /* Match container max-width */
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+#main-footer p {
+    margin: 5px 0;
+}
+
+#main-footer a {
+    color: var(--label-color); /* Subtle link color */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#main-footer a:hover {
+    text-decoration: underline;
+    color: var(--focus-border-color); /* Highlight on hover */
+}
+
+
 /* Responsive adjustments */
 @media (max-width: 600px) {
     html, body {
