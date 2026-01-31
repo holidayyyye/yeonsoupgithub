@@ -1,34 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap');
 
 html, body {
-    height: 100%;
+    min-height: 100vh; /* Use min-height for scrollability */
     margin: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; /* Changed to column for vertical flow */
+    align-items: center; /* Center horizontally */
+    justify-content: flex-start; /* Start from the top, to address mobile issue */
     text-align: center;
-    font-family: 'Noto Serif KR', serif; /* Apply Noto Serif KR */
-    background: linear-gradient(to bottom right, #3a2e3b, #5c4a5c); /* Warm, dark gradient */
-    color: #f0e6d6; /* Light, warm text color */
+    font-family: 'Noto Serif KR', serif;
+    /* Richer, darker background gradient with a hint of red/brown */
+    background: linear-gradient(135deg, #2c212b 0%, #4a3e4a 50%, #2c212b 100%);
+    color: #e0d0c0; /* Slightly muted light text color */
     line-height: 1.6;
+    padding: 20px; /* Add some default padding to body */
+    box-sizing: border-box; /* Include padding in element's total width and height */
 }
 
 .container {
     padding: 40px;
-    background-color: rgba(45, 35, 45, 0.9); /* Slightly transparent dark background */
+    background-color: rgba(30, 25, 30, 0.95); /* Darker, richer background with less transparency */
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); /* Softer, more diffused shadow */
     width: 90%;
     max-width: 500px;
     box-sizing: border-box;
 }
 
 h1 {
-    color: #ffcc99; /* Warm gold/orange for title */
-    font-size: 2.2rem;
+    color: #ffe0b2; /* Lighter, warmer gold/orange for title */
+    font-size: 2.5rem;
     margin-bottom: 30px;
     font-weight: 700;
     letter-spacing: 1px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* Slightly stronger text shadow */
 }
 
 .form-group {
@@ -40,32 +45,32 @@ h1 {
     display: block;
     margin-bottom: 8px;
     font-size: 1.1rem;
-    color: #e0d0c0; /* Slightly muted light color for labels */
+    color: #f5deb3; /* Creamy color for labels */
 }
 
 input[type="text"],
 textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #7a6a7a; /* Subtle border color */
+    border: 1px solid #5a4a5a; /* Darker, more subtle border */
     border-radius: 8px;
     font-size: 1rem;
-    background-color: #4a3e4a; /* Darker input background */
+    background-color: #3a2f3a; /* Even darker input background */
     color: #f0e6d6; /* Light text color in inputs */
-    box-sizing: border-box; /* Include padding in width */
+    box-sizing: border-box;
     font-family: 'Noto Serif KR', serif;
 }
 
 input[type="text"]::placeholder,
 textarea::placeholder {
-    color: #b0a0b0; /* Lighter placeholder text */
+    color: #a090a0; /* Slightly darker placeholder text */
 }
 
 input[type="text"]:focus,
 textarea:focus {
     outline: none;
-    border-color: #ffaa66; /* Highlight on focus */
-    box-shadow: 0 0 8px rgba(255, 170, 102, 0.5);
+    border-color: #ffb74d; /* Softer orange highlight on focus */
+    box-shadow: 0 0 8px rgba(255, 183, 77, 0.4); /* Softer glow */
 }
 
 button[type="submit"] {
@@ -74,15 +79,16 @@ button[type="submit"] {
     border-radius: 8px;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #3a2e3b; /* Dark text on button */
-    background-color: #ffaa66; /* Warm orange button */
+    color: #2a1f2a; /* Darker text on button */
+    background-color: #d84315; /* Deeper, more rustic orange/red button */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for button */
 }
 
 button[type="submit"]:hover {
-    background-color: #ff8c33; /* Darker orange on hover */
+    background-color: #bf360c; /* Darker red-orange on hover */
     transform: translateY(-2px);
 }
 
@@ -116,3 +122,24 @@ button[type="submit"]:hover {
 .hidden {
     display: none !important;
 }
+@media (max-width: 600px) {
+    body {
+        padding-top: 40px; /* Add more padding to push content down from the top */
+        justify-content: flex-start; /* Ensure content starts from the top */
+    }
+
+    .container {
+        padding: 20px; /* Reduce container padding on smaller screens */
+    }
+
+    h1 {
+        font-size: 2rem; /* Slightly reduce heading font size on mobile */
+        margin-bottom: 20px;
+    }
+
+    button[type="submit"] {
+        padding: 12px 25px; /* Adjust button padding */
+        font-size: 1rem;
+    }
+}
+
