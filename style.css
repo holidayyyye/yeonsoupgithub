@@ -204,6 +204,40 @@ button[type="submit"]:hover {
     border-color: var(--go-back-button-hover-bg); /* Use CSS variable */
 }
 
+#naver-map-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999; /* Ensure it's above other content but below message box */
+    background-color: var(--container-bg-color); /* Match container background */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+#naver-map-link:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+#naver-map-link img {
+    width: 28px; /* Size of the SVG icon */
+    height: 28px;
+    color: #03C75A; /* Naver's green color for the icon */
+    transition: color 0.3s ease;
+}
+
+/* Dark mode adjustments for map icon */
+body.dark-mode #naver-map-link {
+    background-color: var(--container-bg-color); /* Dark mode container color */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 /* Message Box (retained, but styled neutrally) */
 .message-box {
     background-color: var(--message-box-bg-color); /* Use CSS variable */
