@@ -1,21 +1,41 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('housewarming-form');
-    const container = document.querySelector('.container'); // The form container
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('submission-form');
     const thankYouMessage = document.getElementById('thank-you-message');
+    const container = document.querySelector('.container'); // Assuming the form is inside .container
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent default form submission
+    if (form && thankYouMessage && container) {
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-        // In a real application, you would collect form data here
-        // const formData = new FormData(form);
-        // for (let [name, value] of formData.entries()) {
-        //     console.log(`${name}: ${value}`);
-        // }
+            const formData = new FormData(form);
+            const formUrl = form.action;
 
-        // Hide the form container
-        container.classList.add('hidden');
+            try {
+                const response = await fetch(formUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json' // Important for Formspree to return JSON
+                    }
+                });
 
-        // Show the thank you message
-        thankYouMessage.classList.remove('hidden');
-    });
+                if (response.ok) {
+                    // Formspree submission successful
+                    container.style.display = 'none'; // Hide the form container
+                    thankYouMessage.classList.remove('hidden'); // Show the thank you message
+                } else {
+                    // Formspree submission failed (e.g., validation error)
+                    const data = await response.json();
+                    alert(data.error || 'Form submission failed. Please try again.');
+                    console.error('Formspree error:', data);
+                }
+            } catch (error) {
+                // Network or other unexpected error
+                alert('An error occurred during submission. Please try again later.');
+                console.error('Submission error:', error);
+            }
+        });
+    } else {
+        console.error('Form, thank you message, or container element not found.');
+    }
 });
