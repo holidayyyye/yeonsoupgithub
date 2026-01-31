@@ -1,24 +1,94 @@
 /* Import a clean, modern sans-serif font suitable for Korean */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
+/* Define CSS Variables for theming */
+:root {
+    --bg-color: #f0f2f5;
+    --container-bg-color: #ffffff;
+    --text-color: #333;
+    --heading-color: #2c3e50;
+    --label-color: #444;
+    --input-bg-color: #ffffff;
+    --input-border-color: #dcdcdc;
+    --placeholder-color: #a0a0a0;
+    --focus-border-color: #007bff;
+    --focus-shadow: rgba(0, 123, 255, 0.25);
+    --button-bg-color: #007bff;
+    --button-text-color: #ffffff;
+    --button-hover-bg-color: #0056b3;
+    --button-shadow: rgba(0, 123, 255, 0.2);
+    --message-box-bg-color: #ffffff;
+    --message-box-text-color: #555;
+    --go-back-button-color: #007bff;
+    --go-back-button-hover-bg: #007bff;
+}
+
+/* Dark mode variables */
+body.dark-mode {
+    --bg-color: #282c34;
+    --container-bg-color: #3a3f4a;
+    --text-color: #e0e0e0;
+    --heading-color: #ffffff;
+    --label-color: #c0c0c0;
+    --input-bg-color: #4a4f59;
+    --input-border-color: #5a606b;
+    --placeholder-color: #909090;
+    --focus-border-color: #61afef;
+    --focus-shadow: rgba(97, 175, 239, 0.25);
+    --button-bg-color: #61afef;
+    --button-text-color: #ffffff;
+    --button-hover-bg-color: #529fdf;
+    --button-shadow: rgba(97, 175, 239, 0.2);
+    --message-box-bg-color: #3a3f4a;
+    --message-box-text-color: #e0e0e0;
+    --go-back-button-color: #61afef;
+    --go-back-button-hover-bg: #61afef;
+}
+
+#theme-toggle-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001; /* Ensure it's above other elements */
+}
+
+#theme-toggle {
+    background-color: var(--container-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 50%; /* Make it round */
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+#theme-toggle:hover {
+    background-color: var(--bg-color);
+}
+
+
 /* Global Styles */
 html, body {
     min-height: 100vh; /* Ensure full viewport height, allow scrolling */
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif; /* Clean sans-serif font */
-    background-color: #f0f2f5; /* Very light, clean background */
-    color: #333; /* Darker, neutral text color */
+    background-color: var(--bg-color); /* Use CSS variable */
+    color: var(--text-color); /* Use CSS variable */
     line-height: 1.6;
     display: flex;
     justify-content: center; /* Center content horizontally */
     align-items: flex-start; /* Start content from the top */
     padding: 20px; /* General padding for body */
     box-sizing: border-box; /* Include padding in element's total width and height */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
 }
 
 /* Main Container */
 .container {
-    background-color: #ffffff; /* Clean white background */
+    background-color: var(--container-bg-color); /* Use CSS variable */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle, modern shadow */
     padding: 30px;
@@ -28,6 +98,7 @@ html, body {
     text-align: left; /* Align text within container to left for professionalism */
     margin-top: 50px; /* Push container down from the very top */
     margin-bottom: 50px; /* Add margin at the bottom for better spacing on scroll */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for theme change */
 }
 
 #house-illustration {
@@ -42,10 +113,11 @@ html, body {
 h1 {
     font-size: 2.2rem;
     font-weight: 700;
-    color: #2c3e50; /* Strong, dark heading color */
+    color: var(--heading-color); /* Use CSS variable */
     margin-bottom: 25px;
     letter-spacing: -0.5px; /* Tighten letter spacing slightly for modern look */
     text-align: center; /* Center the main heading */
+    transition: color 0.3s ease; /* Smooth transition for theme change */
 }
 
 /* Form Group */
@@ -58,7 +130,8 @@ h1 {
     margin-bottom: 8px;
     font-size: 1rem;
     font-weight: 500; /* Medium weight for labels */
-    color: #444; /* Slightly lighter than heading */
+    color: var(--label-color); /* Use CSS variable */
+    transition: color 0.3s ease; /* Smooth transition for theme change */
 }
 
 /* Input Fields */
@@ -66,25 +139,27 @@ input[type="text"],
 textarea {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid #dcdcdc; /* Light, subtle border */
+    border: 1px solid var(--input-border-color); /* Use CSS variable */
     border-radius: 6px; /* Slightly less rounded */
     font-size: 1rem;
-    color: #333;
-    background-color: #ffffff;
+    color: var(--text-color); /* Use CSS variable */
+    background-color: var(--input-bg-color); /* Use CSS variable */
     box-sizing: border-box;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
 }
 
 input[type="text"]::placeholder,
 textarea::placeholder {
-    color: #a0a0a0; /* Neutral placeholder */
+    color: var(--placeholder-color); /* Use CSS variable */
+    transition: color 0.3s ease; /* Smooth transition for theme change */
 }
 
 input[type="text"]:focus,
 textarea:focus {
     outline: none;
-    border-color: #007bff; /* Standard blue accent for focus */
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Soft focus glow */
+    border-color: var(--focus-border-color); /* Use CSS variable */
+    box-shadow: 0 0 0 3px var(--focus-shadow); /* Use CSS variable */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for theme change */
 }
 
 /* Submit Button */
@@ -97,41 +172,41 @@ button[type="submit"] {
     border-radius: 6px;
     font-size: 1.05rem;
     font-weight: 600; /* Semi-bold */
-    color: #ffffff; /* White text on button */
-    background-color: #007bff; /* Primary blue accent color */
+    color: var(--button-text-color); /* Use CSS variable */
+    background-color: var(--button-bg-color); /* Use CSS variable */
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2); /* Subtle button shadow */
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for theme change */
+    box-shadow: 0 2px 8px var(--button-shadow); /* Use CSS variable */
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: var(--button-hover-bg-color); /* Use CSS variable */
     transform: translateY(-1px); /* Slight lift effect */
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 10px var(--button-shadow); /* Use CSS variable */
 }
 
 #go-back-button {
     margin-top: 20px;
     padding: 10px 20px;
-    border: 1px solid #007bff; /* Outline button style */
+    border: 1px solid var(--go-back-button-color); /* Use CSS variable */
     border-radius: 6px;
     font-size: 1rem;
     font-weight: 500;
-    color: #007bff; /* Blue text */
+    color: var(--go-back-button-color); /* Use CSS variable */
     background-color: transparent; /* Transparent background */
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 #go-back-button:hover {
-    background-color: #007bff; /* Blue background on hover */
-    color: #ffffff; /* White text on hover */
-    border-color: #007bff;
+    background-color: var(--go-back-button-hover-bg); /* Use CSS variable */
+    color: var(--button-text-color); /* Use CSS variable */
+    border-color: var(--go-back-button-hover-bg); /* Use CSS variable */
 }
 
 /* Message Box (retained, but styled neutrally) */
 .message-box {
-    background-color: #ffffff;
+    background-color: var(--message-box-bg-color); /* Use CSS variable */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     padding: 30px;
@@ -144,18 +219,21 @@ button[type="submit"]:hover {
     transform: translate(-50%, -50%); /* Center perfectly */
     z-index: 1000; /* Ensure it's on top */
     text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
 }
 
 .message-box h2 {
-    color: #2c3e50;
+    color: var(--heading-color); /* Use CSS variable */
     font-size: 2rem;
     margin-bottom: 15px;
     font-weight: 700;
+    transition: color 0.3s ease; /* Smooth transition for theme change */
 }
 
 .message-box p {
     font-size: 1.1rem;
-    color: #555;
+    color: var(--message-box-text-color); /* Use CSS variable */
+    transition: color 0.3s ease; /* Smooth transition for theme change */
 }
 
 .hidden {
