@@ -6,31 +6,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
-    const currentTheme = localStorage.getItem('theme');
+    let currentTheme = localStorage.getItem('theme'); // Can be 'dark' or 'light'
 
-    if (currentTheme) {
-        body.classList.add(currentTheme);
-        if (currentTheme === 'dark-mode') {
-            themeToggle.textContent = '☀️'; // Sun emoji for light mode
-        } else {
-            themeToggle.textContent = '🌙'; // Moon emoji for dark mode
-        }
-    } else {
-        // Default to light mode and moon emoji
-        body.classList.add('light-mode');
-        themeToggle.textContent = '🌙';
+    // Set initial theme based on localStorage, default to 'light'
+    if (!currentTheme) {
+        currentTheme = 'light';
+        localStorage.setItem('theme', currentTheme);
+    }
+
+    if (currentTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️'; // Sun emoji for dark mode (click to go light)
+    } else { // currentTheme is 'light'
+        // No class needed for light mode, as it's the default via :root
+        themeToggle.textContent = '🌙'; // Moon emoji for light mode (click to go dark)
     }
 
     if (themeToggle) {
         themeToggle.addEventListener('click', function() {
-            if (body.classList.contains('light-mode')) {
-                body.classList.replace('light-mode', 'dark-mode');
-                themeToggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                themeToggle.textContent = '🌙'; // Show moon
+                localStorage.setItem('theme', 'light');
             } else {
-                body.classList.replace('dark-mode', 'light-mode');
-                themeToggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light-mode');
+                body.classList.add('dark-mode');
+                themeToggle.textContent = '☀️'; // Show sun
+                localStorage.setItem('theme', 'dark');
             }
         });
     }
