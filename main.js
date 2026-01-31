@@ -125,26 +125,43 @@ document.addEventListener('DOMContentLoaded', function() {
     const sajuResetButton = document.getElementById('saju-reset-button');
     const sajuFormContainer = sajuSection.querySelector('.container'); // Get container within saju section
 
-    // Placeholder fortune messages
-    const fortunes = [
-        "오늘은 운수 대통! 모든 일이 술술 풀릴 거예요.",
-        "조금은 조심해야 할 하루네요. 중요한 결정은 신중하게!",
-        "새로운 기회가 찾아올 거예요. 용기를 내어 도전하세요.",
-        "사랑과 행복이 가득한 날이에요. 주변 사람들에게 감사함을 표현해 보세요.",
-        "건강에 유의해야 해요. 충분한 휴식을 취하는 것이 중요합니다.",
-        "금전운이 상승하고 있어요. 작은 행운을 기대해 봐도 좋겠네요.",
-        "뜻밖의 소식이 들려올 수 있어요. 긍정적인 마음으로 기다려 보세요.",
-        "인간관계에서 좋은 변화가 있을 거예요. 마음을 열고 대화해 보세요."
-    ];
+    // Placeholder fortune messages - more varied and context-aware
+    const fortunes = {
+        general: [
+            "오늘은 운수 대통! 모든 일이 술술 풀릴 거예요.",
+            "조금은 조심해야 할 하루네요. 중요한 결정은 신중하게!",
+            "새로운 기회가 찾아올 거예요. 용기를 내어 도전하세요.",
+            "사랑과 행복이 가득한 날이에요. 주변 사람들에게 감사함을 표현해 보세요.",
+            "건강에 유의해야 해요. 충분한 휴식을 취하는 것이 중요합니다.",
+            "금전운이 상승하고 있어요. 작은 행운을 기대해 봐도 좋겠네요.",
+            "뜻밖의 소식이 들려올 수 있어요. 긍정적인 마음으로 기다려 보세요.",
+            "인간관계에서 좋은 변화가 있을 거예요. 마음을 열고 대화해 보세요."
+        ],
+        luckyDays: [
+            "오늘은 행운이 가득한 날입니다. 새로운 시작에 길한 운이 따를 것입니다.",
+            "뜻밖의 좋은 소식이 들려올 수 있습니다. 마음을 열고 받아들이세요.",
+            "노력한 만큼의 결실을 맺을 운입니다. 꾸준히 나아가세요."
+        ],
+        cautionDays: [
+            "오늘은 신중함이 필요한 하루입니다. 섣부른 판단은 피하세요.",
+            "주변 사람들과의 오해를 조심하세요. 침착하게 대처하는 것이 중요합니다.",
+            "예상치 못한 지출이 발생할 수 있습니다. 금전 관리에 신경 쓰세요."
+        ],
+        neutralDays: [
+            "평온하고 무난한 하루가 예상됩니다. 일상을 즐기며 에너지를 충전하세요.",
+            "큰 변화는 없지만, 소소한 기쁨을 찾을 수 있는 날입니다.",
+            "현재에 만족하고 미래를 위한 계획을 세우기에 좋은 시기입니다."
+        ]
+    };
 
     if (sajuForm && sajuResultDiv && sajuResultText && sajuResetButton && sajuFormContainer) {
         sajuForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
             // Simulate fortune-telling based on inputs (simplified)
-            const birthYear = sajuForm.elements['birth-year'].value;
-            const birthMonth = sajuForm.elements['birth-month'].value;
-            const birthDay = sajuForm.elements['birth-day'].value;
+            const birthYear = parseInt(sajuForm.elements['birth-year'].value);
+            const birthMonth = parseInt(sajuForm.elements['birth-month'].value);
+            const birthDay = parseInt(sajuForm.elements['birth-day'].value);
             const gender = sajuForm.elements['gender'].value;
 
             if (!birthYear || !birthMonth || !birthDay || !gender) {
@@ -152,10 +169,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Generate a random fortune from the array
-            const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+            // Simple deterministic fortune based on birth day parity
+            let fortuneCategory;
+            if (birthDay % 3 === 0) { // Example: Day divisible by 3 is lucky
+                fortuneCategory = fortunes.luckyDays;
+            } else if (birthDay % 3 === 1) { // Example: Day with remainder 1 is caution
+                fortuneCategory = fortunes.cautionDays;
+            } else { // Example: Day with remainder 2 is neutral
+                fortuneCategory = fortunes.neutralDays;
+            }
+            
+            const selectedFortune = fortuneCategory[Math.floor(Math.random() * fortuneCategory.length)];
 
-            sajuResultText.textContent = `당신의 ${birthYear}년 ${birthMonth}월 ${birthDay}일(${gender === 'male' ? '남성' : '여성'}) 사주는 다음과 같습니다:\n\n${randomFortune}`;
+            sajuResultText.textContent = `당신의 ${birthYear}년 ${birthMonth}월 ${birthDay}일(${gender === 'male' ? '남성' : '여성'}) 사주는 다음과 같습니다:\n\n${selectedFortune}\n\n${fortunes.general[Math.floor(Math.random() * fortunes.general.length)]}`;
 
             sajuForm.style.display = 'none'; // Hide form
             sajuResultDiv.classList.remove('hidden'); // Show result
