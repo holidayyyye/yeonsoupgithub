@@ -179,15 +179,23 @@ document.addEventListener('DOMContentLoaded', function() {
     photoGrid.addEventListener('click', (event) => {
         if (event.target.classList.contains('delete-photo-button')) {
             const { photoUrl, destinationId } = event.target.dataset;
+            console.log('Attempting to delete photo:', { photoUrl, destinationId });
             if (confirm('이 사진을 삭제하시겠습니까?')) {
                 storage.refFromURL(photoUrl).delete()
                     .then(() => {
+                        console.log('Photo deleted from Storage:', photoUrl);
                         const currentPhotos = travelData[destinationId].photos || [];
                         const updatedPhotos = currentPhotos.filter(url => url !== photoUrl);
                         return database.ref(`destinations/${destinationId}/photos`).set(updatedPhotos);
                     })
-                    .then(() => alert('사진이 삭제되었습니다.'))
-                    .catch(err => alert('사진 삭제 중 오류: ' + err.message));
+                    .then(() => {
+                        alert('사진이 삭제되었습니다.');
+                        console.log('Photo reference removed from Database for destination:', destinationId);
+                    })
+                    .catch(err => {
+                        alert('사진 삭제 중 오류: ' + err.message);
+                        console.error('Error during photo deletion:', err);
+                    });
             }
         }
     });
@@ -337,12 +345,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         handleFileUpload(files, uploadProgressContainer, (photoUrls) => {
             const destinationId = destinationName.toLowerCase().replace(/\s+/g, '-');
-            database.ref('destinations/' + destinationId).set({ name: destinationName, photos: photoUrls })
-                .then(() => {
-                    alert('새 앨범이 추가되었습니다.');
+            const destinationRef = database.ref('destinations/' + destinationId);
+
+            destinationRef.transaction((currentData) => {
+                if (currentData) {
+                    // Album exists, append new photos
+                    const existingPhotos = currentData.photos || [];
+                    const updatedPhotos = [...existingPhotos, ...photoUrls];
+                    return { name: destinationName, photos: updatedPhotos };
+                } else {
+                    // Album does not exist, create new
+                    return { name: destinationName, photos: photoUrls };
+                }
+            })
+            .then(({ committed, snapshot }) => {
+                if (committed) {
+                    alert('앨범이 성공적으로 업데이트/추가되었습니다.');
                     addDestinationForm.reset();
                     uploadProgressContainer.innerHTML = '';
-                });
+                } else {
+                    alert('앨범 업데이트 중 문제가 발생했습니다 (트랜잭션 실패).');
+                }
+            })
+            .catch(err => {
+                alert('앨범 처리 중 오류가 발생했습니다: ' + err.message);
+                console.error('Firebase transaction failed:', err);
+            });
         });
     });
 
