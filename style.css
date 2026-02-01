@@ -368,6 +368,33 @@ button[type="submit"]:hover {
 }
 
 
+/* Styling for the album list */
+#album-list {
+    list-style: none; /* Remove default bullet points */
+    padding: 0;
+    margin: 20px 0 0 0; /* Add some margin at the top */
+    width: 100%;
+}
+
+#album-list li {
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin-bottom: 10px; /* Space between items */
+    font-size: 1.1rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+#album-list li:hover {
+    background-color: var(--bg-color);
+    border-color: var(--focus-border-color);
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+
 /* Responsive adjustments */
 @media (max-width: 600px) {
     html, body {

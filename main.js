@@ -38,15 +38,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Navigation and Content Switching Logic
     const showInvitationButton = document.getElementById('show-invitation');
     const showSajuButton = document.getElementById('show-saju');
+    const showAlbumButton = document.getElementById('show-album');
     const invitationSection = document.getElementById('invitation-section');
     const sajuSection = document.getElementById('saju-section');
+    const albumSection = document.getElementById('album-section');
 
     function showSection(sectionToShow) {
         invitationSection.classList.add('hidden');
         sajuSection.classList.add('hidden');
+        albumSection.classList.add('hidden');
 
         showInvitationButton.classList.remove('active');
         showSajuButton.classList.remove('active');
+        showAlbumButton.classList.remove('active');
 
         if (sectionToShow === 'invitation') {
             invitationSection.classList.remove('hidden');
@@ -54,16 +58,23 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (sectionToShow === 'saju') {
             sajuSection.classList.remove('hidden');
             showSajuButton.classList.add('active');
+        } else if (sectionToShow === 'album') {
+            albumSection.classList.remove('hidden');
+            showAlbumButton.classList.add('active');
         }
     }
 
-    if (showInvitationButton && showSajuButton) {
+    if (showInvitationButton && showSajuButton && showAlbumButton) {
         showInvitationButton.addEventListener('click', function() {
             showSection('invitation');
         });
 
         showSajuButton.addEventListener('click', function() {
             showSection('saju');
+        });
+
+        showAlbumButton.addEventListener('click', function() {
+            showSection('album');
         });
     }
 
