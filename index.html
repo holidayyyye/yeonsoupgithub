@@ -100,7 +100,7 @@
                     </div>
                     <div class="form-group">
                         <label for="new-photos-input">사진 선택</label>
-                        <input type="file" id="new-photos-input" multiple accept="image/*">
+                        <input type="file" id="new-photos-input" multiple accept="image/*" capture="environment">
                     </div>
                     <button type="submit" class="admin-button">앨범 추가</button>
                     <div id="upload-progress-container"></div>
@@ -115,7 +115,7 @@
                 <h2></h2>
                 <div id="photo-admin-controls" class="hidden">
                     <label for="add-more-photos-input" id="add-more-photos-button" class="admin-button">사진 추가</label>
-                    <input type="file" id="add-more-photos-input" multiple accept="image/*" style="display: none;">
+                    <input type="file" id="add-more-photos-input" multiple accept="image/*" style="display: none;" capture="environment">
                     <div id="more-upload-progress-container"></div>
                 </div>
                 <div id="photo-grid"></div>

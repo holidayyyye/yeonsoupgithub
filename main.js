@@ -257,18 +257,73 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- File Upload Forms ---
     function handleFileUpload(files, container, onComplete) {
         if (files.length === 0) return;
-        container.innerHTML = `<span>업로드 중: 0/${files.length}</span>`;
-        const uploadPromises = Array.from(files).map(file => {
-            const fileName = `${Date.now()}-${file.name}`;
-            const storageRef = storage.ref(`photos/${fileName}`);
-            return storageRef.put(file).then(snapshot => snapshot.ref.getDownloadURL());
+
+        container.innerHTML = ''; // Clear previous messages
+        const fileUploadStates = Array.from(files).map(file => ({
+            file,
+            status: 'pending',
+            progress: 0,
+            url: null,
+            element: null // To store the DOM element for this file's status
+        }));
+
+        // Render initial states
+        fileUploadStates.forEach((state, index) => {
+            const div = document.createElement('div');
+            div.className = 'upload-item';
+            div.innerHTML = `<span class="file-name">${state.file.name}</span> - <span class="status">업로드 중...</span> <span class="progress-percent">(0%)</span>`;
+            container.appendChild(div);
+            state.element = div;
+        });
+
+        const uploadPromises = fileUploadStates.map(state => {
+            return new Promise((resolve, reject) => {
+                const fileName = `${Date.now()}-${state.file.name}`;
+                const storageRef = storage.ref(`photos/${fileName}`);
+                const uploadTask = storageRef.put(state.file);
+
+                uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+                    (snapshot) => {
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        state.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        if (state.element) {
+                            state.element.querySelector('.progress-percent').textContent = `(${Math.round(state.progress)}%)`;
+                        }
+                    },
+                    (error) => {
+                        // A full list of error codes is available at
+                        // https://firebase.google.com/docs/storage/web/handle-errors
+                        state.status = 'failed';
+                        if (state.element) {
+                            state.element.querySelector('.status').textContent = '실패';
+                            state.element.querySelector('.status').style.color = 'red';
+                            state.element.querySelector('.progress-percent').textContent = '';
+                        }
+                        console.error('Upload failed:', error);
+                        reject(error);
+                    },
+                    () => {
+                        // Upload completed successfully
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            state.status = 'completed';
+                            state.url = downloadURL;
+                            if (state.element) {
+                                state.element.querySelector('.status').textContent = '완료';
+                                state.element.querySelector('.status').style.color = 'green';
+                                state.element.querySelector('.progress-percent').textContent = '';
+                            }
+                            resolve(downloadURL);
+                        });
+                    }
+                );
+            });
         });
 
         Promise.all(uploadPromises)
             .then(onComplete)
             .catch(err => {
-                alert('업로드 중 오류가 발생했습니다: ' + err.message);
-                container.innerHTML = '<span style="color: red;">업로드 실패</span>';
+                alert('일부 파일 업로드 중 오류가 발생했습니다: ' + err.message);
+                // The individual file states already show failures, so this is for overall feedback
             });
     }
 
