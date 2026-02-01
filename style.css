@@ -452,54 +452,72 @@ button[type="submit"]:hover {
     display: block; /* Remove extra space below image */
 }
 
-    html, body {
-        padding: 15px; /* Reduce general padding on smaller screens */
-        padding-top: 70px; /* Adjust for fixed #nav-tabs on mobile */
-    }
-
-    #nav-tabs {
-        top: 15px;
-        left: 15px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    #theme-toggle-container {
-        top: 15px;
-        right: 15px;
-    }
-
-    .container {
-        padding: 20px; /* Adjust container padding */
-        margin-top: 0; /* Reset margin-top as body padding accounts for it */
-        margin-bottom: 20px;
-    }
-
-    h1 {
-        font-size: 1.8rem; /* Smaller heading on mobile */
-        margin-bottom: 20px;
-    }
-
-    input[type="text"],
-    textarea,
-    button[type="submit"],
-    select { /* Added select for consistency */
-        padding: 10px 12px; /* Slightly smaller padding for inputs/buttons */
-        font-size: 0.95rem;
-    }
-
-    button[type="submit"] {
-        margin-top: 20px;
-    }
-
-    #naver-map-link {
-        bottom: 15px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-    }
-
-    #naver-map-link img {
-        width: 25px;
-        height: 25px;
-    }
+.album-heading-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    width: 100%;
 }
+
+.album-heading-container span {
+    text-align: center;
+    flex-grow: 1; /* Allow the span to take available space */
+}
+
+.admin-button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    margin-left: 10px;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.admin-button:hover {
+    background-color: var(--button-hover-bg-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px var(--button-shadow);
+}
+
+#admin-panel {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: -15px; /* Adjust spacing with h1 */
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#admin-password {
+    flex-grow: 1; /* Allow input to take available space */
+    min-width: 150px; /* Ensure it's not too small */
+    padding: 8px 12px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    background-color: var(--input-bg-color);
+}
+
+#admin-password:focus {
+    outline: none;
+    border-color: var(--focus-border-color);
+    box-shadow: 0 0 0 3px var(--focus-shadow);
+}
+
+#admin-password-submit, #exit-admin-mode, #add-destination-button {
+    margin: 0; /* Reset margin from general button styles */
+}
+
+
+/* Responsive adjustments */

@@ -50,6 +50,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const photoGrid = document.getElementById('photo-grid');
     const backToAlbumListButton = document.getElementById('back-to-album-list');
 
+    // Admin elements
+    const adminModeToggle = document.getElementById('admin-mode-toggle');
+    const adminPanel = document.getElementById('admin-panel');
+    const adminPasswordInput = document.getElementById('admin-password');
+    const adminPasswordSubmit = document.getElementById('admin-password-submit');
+    const addDestinationButton = document.getElementById('add-destination-button');
+    const exitAdminModeButton = document.getElementById('exit-admin-mode');
+
+    // Simple Admin Password (for client-side demonstration only, NOT secure)
+    const ADMIN_PASSWORD = "gemini";
+
     // Travel Data (Temporary, will be replaced by admin functionality later)
     const travelData = {
         jeju: {
@@ -86,6 +97,11 @@ document.addEventListener('DOMContentLoaded', function() {
             albumList.classList.remove('hidden');
             photoDisplayArea.classList.add('hidden');
             backToAlbumListButton.classList.add('hidden');
+            // Hide admin panel when switching to album tab
+            adminPanel.classList.add('hidden');
+            adminPasswordInput.value = '';
+            addDestinationButton.classList.add('hidden');
+            exitAdminModeButton.classList.add('hidden');
         }
     }
 
@@ -127,6 +143,11 @@ document.addEventListener('DOMContentLoaded', function() {
             imgContainer.appendChild(img);
             photoGrid.appendChild(imgContainer);
         });
+        // Hide admin panel if currently active when displaying photos
+        adminPanel.classList.add('hidden');
+        adminPasswordInput.value = '';
+        addDestinationButton.classList.add('hidden');
+        exitAdminModeButton.classList.add('hidden');
     }
 
     // Event listener for destination list items
@@ -145,6 +166,69 @@ document.addEventListener('DOMContentLoaded', function() {
             photoDisplayArea.classList.add('hidden');
             backToAlbumListButton.classList.add('hidden');
             albumList.classList.remove('hidden');
+        });
+    }
+
+    // Admin mode toggle logic
+    if (adminModeToggle) {
+        adminModeToggle.addEventListener('click', function() {
+            adminPanel.classList.toggle('hidden');
+            adminPasswordInput.value = ''; // Clear password input
+            addDestinationButton.classList.add('hidden'); // Hide admin buttons
+            exitAdminModeButton.classList.add('hidden');
+        });
+    }
+
+    // Admin password submission logic
+    if (adminPasswordSubmit) {
+        adminPasswordSubmit.addEventListener('click', function() {
+            if (adminPasswordInput.value === ADMIN_PASSWORD) {
+                alert('관리자 모드 활성화!');
+                addDestinationButton.classList.remove('hidden');
+                exitAdminModeButton.classList.remove('hidden');
+                adminPasswordInput.classList.add('hidden'); // Hide password input after successful login
+                adminPasswordSubmit.classList.add('hidden'); // Hide submit button after successful login
+            } else {
+                alert('비밀번호가 올바르지 않습니다.');
+                adminPasswordInput.value = '';
+            }
+        });
+    }
+
+    // Exit admin mode logic
+    if (exitAdminModeButton) {
+        exitAdminModeButton.addEventListener('click', function() {
+            adminPanel.classList.add('hidden');
+            adminPasswordInput.value = '';
+            addDestinationButton.classList.add('hidden');
+            exitAdminModeButton.add('hidden'); // Corrected from remove('hidden')
+            adminPasswordInput.classList.remove('hidden'); // Show password input again
+            adminPasswordSubmit.classList.remove('hidden'); // Show submit button again
+        });
+    }
+
+    // Add Destination logic
+    if (addDestinationButton) {
+        addDestinationButton.addEventListener('click', function() {
+            const destinationName = prompt('새 여행지의 이름을 입력하세요:');
+            if (destinationName) {
+                const destinationId = destinationName.toLowerCase().replace(/\s/g, ''); // Simple ID generation
+                const photoUrlsString = prompt('사진 URL을 쉼표로 구분하여 입력하세요 (예: url1,url2):');
+                const photoUrls = photoUrlsString ? photoUrlsString.split(',').map(url => url.trim()) : [];
+
+                travelData[destinationId] = {
+                    name: destinationName,
+                    photos: photoUrls
+                };
+
+                // Add to album list
+                const newLi = document.createElement('li');
+                newLi.dataset.destination = destinationId;
+                newLi.textContent = destinationName;
+                albumList.appendChild(newLi);
+
+                alert(`새 여행지 "${destinationName}"이 추가되었습니다.`);
+            }
         });
     }
 

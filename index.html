@@ -86,7 +86,16 @@
 
     <div id="album-section" class="content-section hidden">
         <div class="container">
-            <h1>여행 앨범</h1>
+            <h1 class="album-heading-container">
+                <span>여행 앨범</span>
+                <button id="admin-mode-toggle" class="admin-button">관리자 모드</button>
+            </h1>
+            <div id="admin-panel" class="hidden">
+                <input type="password" id="admin-password" placeholder="관리자 비밀번호">
+                <button id="admin-password-submit" class="admin-button">입력</button>
+                <button id="add-destination-button" class="admin-button hidden">여행지 추가</button>
+                <button id="exit-admin-mode" class="admin-button hidden">관리자 모드 종료</button>
+            </div>
             <ul id="album-list">
                 <li data-destination="jeju">제주도</li>
             </ul>
