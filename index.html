@@ -93,7 +93,18 @@
             <div id="admin-panel" class="hidden">
                 <input type="password" id="admin-password" placeholder="관리자 비밀번호">
                 <button id="admin-password-submit" class="admin-button">입력</button>
-                <button id="add-destination-button" class="admin-button hidden">여행지 추가</button>
+                <form id="add-destination-form" class="hidden">
+                    <div class="form-group">
+                        <label for="new-destination-name">앨범 이름</label>
+                        <input type="text" id="new-destination-name" required placeholder="예: 제주도 여행">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-photos-input">사진 선택</label>
+                        <input type="file" id="new-photos-input" multiple accept="image/*">
+                    </div>
+                    <button type="submit" class="admin-button">앨범 추가</button>
+                    <div id="upload-progress-container"></div>
+                </form>
                 <button id="exit-admin-mode" class="admin-button hidden">관리자 모드 종료</button>
             </div>
             <ul id="album-list">
@@ -102,6 +113,11 @@
             <div id="photo-display-area" class="hidden">
                 <button id="back-to-album-list" class="hidden">← 목록으로</button>
                 <h2></h2>
+                <div id="photo-admin-controls" class="hidden">
+                    <label for="add-more-photos-input" id="add-more-photos-button" class="admin-button">사진 추가</label>
+                    <input type="file" id="add-more-photos-input" multiple accept="image/*" style="display: none;">
+                    <div id="more-upload-progress-container"></div>
+                </div>
                 <div id="photo-grid"></div>
             </div>
         </div>
@@ -129,6 +145,7 @@
 
         <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
         <script src="main.js"></script>
 
     </body>
