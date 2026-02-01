@@ -70,8 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sectionToShow === 'album') {
             photoDisplayArea.classList.add('hidden');
             albumList.classList.remove('hidden');
+            // If not in admin mode, ensure admin panel is hidden
             if (!isAdmin) {
                 adminPanel.classList.add('hidden');
+            } else {
+                // If in admin mode, and on album section, ensure admin controls are visible
+                // but not the password input if already logged in
+                adminPanel.classList.remove('hidden');
+                adminPasswordInput.classList.add('hidden');
+                adminPasswordSubmit.classList.add('hidden');
+                addDestinationForm.classList.remove('hidden');
+                exitAdminModeButton.classList.remove('hidden');
             }
         }
     }
@@ -187,37 +196,62 @@ document.addEventListener('DOMContentLoaded', function() {
         photoDisplayArea.classList.add('hidden');
         albumList.classList.remove('hidden');
         photoAdminControls.dataset.destinationId = ''; // Clear current destination
+        photoAdminControls.classList.add('hidden'); // Ensure photo admin controls are hidden when going back
     });
 
     // --- Admin Panel ---
     adminModeToggle.addEventListener('click', () => {
-        if (isAdmin) {
+        if (isAdmin) { // If already in admin mode, clicking toggle deactivates it
             isAdmin = false;
             adminPanel.classList.add('hidden');
             alert('관리자 모드 비활성화.');
-            renderAlbumList();
-        } else {
+            renderAlbumList(); // Re-render to hide delete buttons
+            // Also hide admin forms/buttons that would otherwise be visible
+            addDestinationForm.classList.add('hidden');
+            exitAdminModeButton.classList.add('hidden');
+            photoAdminControls.classList.add('hidden'); // Ensure photo admin controls are hidden
+        } else { // If not in admin mode, show password panel
             adminPanel.classList.remove('hidden');
+            adminPasswordInput.classList.remove('hidden'); // Ensure password input is visible
+            adminPasswordSubmit.classList.remove('hidden'); // Ensure password submit is visible
             adminPasswordInput.focus();
+            // Hide other admin controls until password is correct
+            addDestinationForm.classList.add('hidden');
+            exitAdminModeButton.classList.add('hidden');
+            photoAdminControls.classList.add('hidden');
         }
+        adminPasswordInput.value = ''; // Clear password field
     });
 
     adminPasswordSubmit.addEventListener('click', () => {
         if (adminPasswordInput.value === "gemini") {
             isAdmin = true;
             alert('관리자 모드 활성화!');
-            adminPanel.classList.add('hidden');
-            renderAlbumList();
+            adminPanel.classList.remove('hidden'); // Keep admin panel visible
+            adminPasswordInput.classList.add('hidden'); // Hide password input
+            adminPasswordSubmit.classList.add('hidden'); // Hide password submit button
+            addDestinationForm.classList.remove('hidden'); // Show album add form
+            exitAdminModeButton.classList.remove('hidden'); // Show exit button
+            renderAlbumList(); // Re-render album list with delete buttons
+
+            // If currently on a photo view, show photo admin controls
+            const currentDestinationId = photoAdminControls.dataset.destinationId;
+            if (currentDestinationId && !photoDisplayArea.classList.contains('hidden')) {
+                displayDestinationPhotos(currentDestinationId);
+            }
         } else {
             alert('비밀번호가 올바르지 않습니다.');
+            adminPasswordInput.value = '';
         }
-        adminPasswordInput.value = '';
     });
 
     exitAdminModeButton.addEventListener('click', () => {
         isAdmin = false;
-        adminPanel.classList.add('hidden');
-        renderAlbumList();
+        adminPanel.classList.add('hidden'); // Hide the entire admin panel
+        addDestinationForm.classList.add('hidden'); // Hide album add form
+        photoAdminControls.classList.add('hidden'); // Hide photo admin controls
+        renderAlbumList(); // Re-render album list to hide delete buttons
+        alert('관리자 모드 비활성화.');
     });
 
     // --- File Upload Forms ---
