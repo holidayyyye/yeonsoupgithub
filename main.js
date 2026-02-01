@@ -42,6 +42,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const invitationSection = document.getElementById('invitation-section');
     const sajuSection = document.getElementById('saju-section');
     const albumSection = document.getElementById('album-section');
+    
+    // Album related elements
+    const albumList = document.getElementById('album-list');
+    const photoDisplayArea = document.getElementById('photo-display-area');
+    const photoDisplayAreaTitle = photoDisplayArea.querySelector('h2');
+    const photoGrid = document.getElementById('photo-grid');
+    const backToAlbumListButton = document.getElementById('back-to-album-list');
+
+    // Travel Data (Temporary, will be replaced by admin functionality later)
+    const travelData = {
+        jeju: {
+            name: "제주도",
+            photos: [
+                "https://via.placeholder.com/300x200/FF5733/ffffff?text=Jeju+1",
+                "https://via.placeholder.com/300x200/33FF57/ffffff?text=Jeju+2",
+                "https://via.placeholder.com/300x200/3357FF/ffffff?text=Jeju+3",
+                "https://via.placeholder.com/300x200/FFFF33/000000?text=Jeju+4",
+                "https://via.placeholder.com/300x200/FF33FF/ffffff?text=Jeju+5"
+            ]
+        }
+    };
 
     function showSection(sectionToShow) {
         invitationSection.classList.add('hidden');
@@ -61,6 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (sectionToShow === 'album') {
             albumSection.classList.remove('hidden');
             showAlbumButton.classList.add('active');
+            // Ensure album list is visible and photo display is hidden when album tab is clicked
+            albumList.classList.remove('hidden');
+            photoDisplayArea.classList.add('hidden');
+            backToAlbumListButton.classList.add('hidden');
         }
     }
 
@@ -77,6 +102,52 @@ document.addEventListener('DOMContentLoaded', function() {
             showSection('album');
         });
     }
+
+    // Function to display photos for a given destination
+    function displayDestinationPhotos(destinationId) {
+        const destination = travelData[destinationId];
+        if (!destination) {
+            console.error('Destination not found:', destinationId);
+            return;
+        }
+
+        albumList.classList.add('hidden');
+        photoDisplayArea.classList.remove('hidden');
+        backToAlbumListButton.classList.remove('hidden');
+        
+        photoDisplayAreaTitle.textContent = destination.name + ' 사진';
+        photoGrid.innerHTML = ''; // Clear previous photos
+
+        destination.photos.forEach(photoUrl => {
+            const imgContainer = document.createElement('div');
+            imgContainer.classList.add('photo-item'); // Add a class for styling
+            const img = document.createElement('img');
+            img.src = photoUrl;
+            img.alt = destination.name + ' 사진';
+            imgContainer.appendChild(img);
+            photoGrid.appendChild(imgContainer);
+        });
+    }
+
+    // Event listener for destination list items
+    if (albumList) {
+        albumList.addEventListener('click', function(event) {
+            const target = event.target;
+            if (target.tagName === 'LI' && target.dataset.destination) {
+                displayDestinationPhotos(target.dataset.destination);
+            }
+        });
+    }
+
+    // Event listener for back button
+    if (backToAlbumListButton) {
+        backToAlbumListButton.addEventListener('click', function() {
+            photoDisplayArea.classList.add('hidden');
+            backToAlbumListButton.classList.add('hidden');
+            albumList.classList.remove('hidden');
+        });
+    }
+
 
     // Form Submission Logic for Invitation Form
     const invitationForm = document.getElementById('submission-form');
